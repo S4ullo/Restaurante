@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio - Sabor de Minas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Sabor de Minas</h1>
+        <p>O melhor da culinária mineira em um só lugar</p>
+    </header>
+
+    <nav>
+        <a href="restaurante.html">Início</a>
+        <a href="cardapio.html">Cardápio</a>
+        <a href="contato.html">Contato</a>
+    </nav>
+
+    <section id="cardapio" class="container">
+        <h2> Prato Feito</h2>
+
+        <div class="item">
+            <h3>Feijoada Completa</h3>
+            <p>Arroz, couve, laranja e farofa</p>
+            <p><strong>R$ 25,00</strong></p>
+            <label>Qtd: <input type="number" min="0" value="0" id="feijoadaCompleta" onchange="atualizarTotal()"></label>
+        </div>
+
+        <div class="item">
+            <h3>Frango com Quiabo</h3>
+            <p>Frango com Quiabo, Angu, Feijão, Salada</p>
+            <p><strong>R$ 22,00</strong></p>
+            <label>Qtd: <input type="number" min="0" value="0" id="frangoQuiabo" onchange="atualizarTotal()"></label>
+        </div>
+
+        <div class="item">
+            <h3>Tropeiro Mineiro</h3>
+            <p>Feijão tropeiro, arroz, linguiça e torresmo</p>
+            <p><strong>R$ 25,00</strong></p>
+            <label>Qtd: <input type="number" min="0" value="0" id="tropeiroCompleto" onchange="atualizarTotal()"></label>
+        </div>
+
+        <div class="item">
+            <h3>Prato Tradicional</h3>
+            <p>Feijão, arroz, Salada, Farofa, Carne de Panela, Batata Frita</p>
+            <p><strong>R$ 20,00</strong></p>
+            <label>Qtd: <input type="number" min="0" value="0" id="tradicional" onchange="atualizarTotal()"></label>
+        </div>
+
+        <h2>Apenas um Item</h2>
+
+        <div class="item">
+            <h3>Tropeiro Apenas</h3>
+            <p>Apenas Tropeiro</p>
+            <p><strong>R$ 35,00</strong></p>
+            <label>Qtd: <input type="number" min="0" value="0" id="tropeiroApenas" onchange="atualizarTotal()"></label>
+        </div>
+
+        <div class="item">
+            <h3>Feijoada Apenas</h3>
+            <p>Apenas Feijoada</p>
+            <p><strong>R$ 35,00</strong></p>
+            <label>Qtd: <input type="number" min="0" value="0" id="feijoadaApenas" onchange="atualizarTotal()"></label>
+        </div>
+
+        <h3>Total do Pedido: R$ <span id="totalPedido">0</span></h3>
+
+        <button onclick="finalizarPedido()">Finalizar Pedido</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Restaurante Sabor de Minas - Todos os direitos reservados.</p>
+        <a href="https://wa.me/5531999998888" class="whatsapp" target="_blank">
+            <img src="img/whatsappIcon.png" alt="WhatsApp">
+        </a>
+    </footer>
+
+    <script>
+        // Preço de cada prato
+        const precos = {
+            feijoadaCompleta: 25,
+            frangoQuiabo: 22,
+            tropeiroCompleto: 25,
+            tradicional: 20,
+            tropeiroApenas: 35,
+            feijoadaApenas: 35
+        };
+
+        function atualizarTotal() {
+            let total = 0;
+            for (let id in precos) {
+                const qtd = parseInt(document.getElementById(id).value) || 0;
+                total += qtd * precos[id];
+            }
+            document.getElementById('totalPedido').textContent = total.toFixed(2);
+        }
+
+        function finalizarPedido() {
+            let mensagem = "Novo Pedido:%0A";
+            for (let id in precos) {
+                const qtd = parseInt(document.getElementById(id).value) || 0;
+                if (qtd > 0) {
+                    const nomePrato = document.querySelector(`#${id}`).parentNode.querySelector('h3').textContent;
+                    mensagem += `${nomePrato} - ${qtd}x%0A`;
+                }
+            }
+            mensagem += `%0ATotal: R$ ${document.getElementById('totalPedido').textContent}`;
+
+            const telefone = "5531999998888";
+            window.open(`https://wa.me/${telefone}?text=${mensagem}`, '_blank');
+        }
+    </script>
+</body>
+</html>
